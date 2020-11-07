@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Dashboard{% endblock %}
+
+
+{% block content %}
+
+  <h1 class="mt-4 mb-4">Collections</h1>
+  <a class="btn btn-success"  href="{% url 'fetch' %}"
+     role="button">Fetch</a>
+
+  <table class="table table-striped mt-4">
+    <thead class="thead-dark">
+      <tr>
+        <th>Collection name</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for collection in collections %}
+        <tr>
+          <td>
+            <a href="{% url 'collection' pk=collection.pk %}">
+              {{ collection.filename }}</a>
+          </td>
+          <td>
+            {{ collection.created|date:'N n Y, g:i A' }}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

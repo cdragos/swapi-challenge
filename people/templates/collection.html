@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Collection {{ collection.filename }}
+{% endblock %}
+
+{% block content %}
+  <h2 class="mt-4 mb-4">{{ collection.filename }}</h2>
+
+  <form method="GET">
+    {% for column in headers %}
+      <label>
+        <input type="checkbox" name="columns" value="{{ column }}" />
+          {{ column|title }}
+      </label>
+    {% endfor %}
+    <button class="btn btn-primary" type="submit">Filter</button>
+    <a href="{% url 'collection' pk=collection.pk %}"
+       class="btn btn-primary">Reset filters</a>
+  </form>
+
+  <table class="table table-striped mt-4">
+    <thead class="thead-dark">
+      <tr>
+        {% for column in headers %}
+          <td>{{ column|title }}</td>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          {% for item in row %}
+            <td>{{ item }} </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+  {% if limit %}
+  <div class="mb-4">
+    <a class="btn btn-success"
+       href="{% url 'collection' pk=collection.pk %}?limit={{ limit }}" role="button">Load more</a>
+  </div>
+  {% endif %}
+
+{% endblock %}
